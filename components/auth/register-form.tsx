@@ -18,7 +18,7 @@ import { Button } from '../ui/button'
 
 import FormError from './form-error'
 import FormSuccess from './form-success'
-import { register } from 'module'
+import { register } from '@/actions/register'
 
 const RegisterForm = () => {
     const [error, setError] = useState<string | undefined>('')
