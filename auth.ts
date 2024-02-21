@@ -17,7 +17,7 @@ export const {
             return session
         },
         async jwt({ token, user, profile }) {
-            console.log(token.accessToken)
+            console.log(token)
             return token
         },
     },
