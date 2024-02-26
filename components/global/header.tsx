@@ -1,21 +1,11 @@
-'use client'
-
 import React from 'react'
-
-import Link from 'next/link'
-import { useSelectedLayoutSegment } from 'next/navigation'
-
-import { useScroll } from '@/hooks/use-scroll'
-import { cn } from '@/lib/utils'
+import { Input } from '../ui/input'
 
 const Header = () => {
-    const selectedLayout = useSelectedLayoutSegment()
-
     return (
-        <div
-            className={`sticky inset-x-0 top-0 z-30 w-full transition-all border-b border-gray-200`}
-        >
-            headert
+        <div className=''>
+            {/* searchbar */}
+            <Input className='bg-slate-300/20 border-none rounded-xl mt-5' />
         </div>
     )
 }

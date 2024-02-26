@@ -1,3 +1,4 @@
+import Header from '@/components/global/header'
 import SidebarNavigation from '@/components/global/sidebar-nav'
 
 const HomeLayout = ({ children }: { children: React.ReactNode }) => {
@@ -5,7 +6,10 @@ const HomeLayout = ({ children }: { children: React.ReactNode }) => {
         <aside className='h-screen'>
             <div className='h-full sm:w-[] flex flex-row '>
                 <SidebarNavigation />
-                {children}
+                <div className='flex flex-col px-10'>
+                    <Header />
+                    {children}
+                </div>
             </div>
         </aside>
     )

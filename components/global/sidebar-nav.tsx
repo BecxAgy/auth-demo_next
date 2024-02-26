@@ -2,14 +2,15 @@ import React from 'react'
 import avatar from '../../public/Avatar.png'
 import Image from 'next/image'
 import { navbarItems } from '@/utils/constants'
+import SidenavItem from './sidenav-item'
 const SidebarNavigation = () => {
     return (
         <aside className='h-screen'>
-            <div className='h-full w-[256px] min-w-[104px] bg-[#FFEDE0] rounded-r-[28px]'>
+            <div className='h-full w-[256px] min-w-[104px] bg-slate-300/10  shadow-lg rounded-r-[28px]'>
                 <div className='flex flex-col gap-y-2 '>
                     {/* User information */}
 
-                    <div className='flex flex-row gap-[12px] px-5 py-3 mt-4'>
+                    <div className='flex flex-row gap-[12px] px-6 py-3 mt-4'>
                         {/* icon or image */}
                         <Image
                             src={avatar}
@@ -31,10 +32,12 @@ const SidebarNavigation = () => {
                     <div className='w-[80%] h-[0.5px] bg-[#432C2C] opacity-5 mx-auto' />
 
                     {/* Main */}
-                    <div className=''>
-                        <h2>Principal</h2>
-                        {navbarItems.map((items, index) => (
-                            <div>{items.title}</div>
+                    <div className=' px-6 py-3'>
+                        <h2 className='uppercase mx- text-[#66615C] text-[11px] tracking-wide'>
+                            Principal
+                        </h2>
+                        {navbarItems.map((item, index) => (
+                            <SidenavItem key={index} item={item} />
                         ))}
                     </div>
                 </div>
