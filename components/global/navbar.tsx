@@ -7,7 +7,7 @@ import SignOutButton from '../auth/signout-button'
 
 const Navbar = async () => {
     return (
-        <div className='bg-slate-400/10 justify-between flex shadow-md p-3'>
+        <div className='bg-slate-400/10 justify-between w-full flex shadow-md p-3'>
             <div></div>
             <SignOutButton />
         </div>
