@@ -1,4 +1,4 @@
-import FormWrapper from '@/components/global/form_wrapper'
+import FormWrapper from '@/components/global/form/form_wrapper'
 import { Card, CardHeader } from '@/components/ui/card'
 import React from 'react'
 

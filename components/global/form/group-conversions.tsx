@@ -6,8 +6,8 @@ import {
     FormItem,
     FormLabel,
     FormMessage,
-} from '../ui/form'
-import { Checkbox } from '../ui/checkbox'
+} from '../../ui/form'
+import { Checkbox } from '../../ui/checkbox'
 
 const GroupConversionForm = ({ form }) => {
     const conversionsFormat = [

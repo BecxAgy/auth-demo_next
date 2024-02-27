@@ -14,8 +14,9 @@ import {
     FormMessage,
 } from '@/components/ui/form'
 import { Input } from '@/components/ui/input'
-import { Textarea } from '../ui/textarea'
+import { Textarea } from '../../ui/textarea'
 import GroupConversionForm from './group-conversions'
+import GroupDeliverableForm from './group-deliverables'
 
 const formSchema = z.object({
     name: z.string().min(2).max(50),
@@ -111,6 +112,7 @@ const FormWrapper = () => {
                 <GroupConversionForm form={form} />
 
                 {/* DeliverableList */}
+                <GroupDeliverableForm />
                 <Button type='submit'>Submit</Button>
             </form>
         </Form>
