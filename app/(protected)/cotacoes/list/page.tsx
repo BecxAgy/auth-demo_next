@@ -35,7 +35,7 @@ async function getQuotations(): Promise<QuotationView[]> {
 const List = async () => {
     const data = await getQuotations()
     return (
-        <div className=' flex flex-col lg:w-[1440px]'>
+        <div className='flex justify-center'>
             <Card className='shadow-md border-none '>
                 <CardHeader>
                     <h1 className='font-semibold text-2xl'>Cotações</h1>

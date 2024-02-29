@@ -9,7 +9,7 @@ import {
 } from '../../ui/form'
 import { Checkbox } from '../../ui/checkbox'
 
-const GroupConversionForm = ({ form }) => {
+const GroupConversionForm = ({ form }: any) => {
     const conversionsFormat = [
         {
             id: 1,

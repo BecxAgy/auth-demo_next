@@ -68,7 +68,7 @@ export function DataTable<TData, TValue>({
 
     return (
         <>
-            <div className='lg:w-[1400px]'>
+            <div className=''>
                 {/* Filters */}
 
                 <div className='flex items-center justify-between'>
