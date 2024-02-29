@@ -7,7 +7,7 @@ import {
 } from '@/routes'
 import { url } from 'inspector'
 import NextAuth from 'next-auth'
-
+// I NEED TO UNDERSTAND WHY I'M REDIRECTING TO SETTINGS
 export default auth(req => {
     const { nextUrl } = req
     const isLoggedIn = !!req.auth
@@ -19,18 +19,13 @@ export default auth(req => {
     if (isApiAuthRoute) {
         return null
     }
-
-    if (isAuthRoute) {
-        if (isLoggedIn) {
-            console.log('entrou')
-            return Response.redirect(new URL(DEFAULT_LOGIN_REDIRECT, nextUrl))
-        }
-        return null
-    }
-
+    //SE NAO ESTÁ LOGADO E NAO ESTÁ NUMA ROTA PUBLICA
     if (!isLoggedIn && !isPublicRoute) {
         console.log('saiu')
         return Response.redirect(new URL('/auth/login', nextUrl))
+    }
+    if (isLoggedIn && isPublicRoute) {
+        return Response.redirect(new URL(DEFAULT_LOGIN_REDIRECT, nextUrl))
     }
 })
 
