@@ -16,40 +16,28 @@ import {
 import { Input } from '@/components/ui/input'
 import { Textarea } from '../../ui/textarea'
 import GroupConversionForm from './group-conversions'
-import GroupDeliverableForm from './group-deliverables'
+import { ToggleGroupDeliverable } from './group-deliverables'
 
-const formSchema = z.object({
-    name: z.string().min(2).max(50),
-    area: z.preprocess(a => parseInt(z.string().parse(a), 10), z.number()),
-    description: z
-        .string()
-        .min(10, {
-            message: 'A descrição da cotação deve ter no mínimo 10 caracteres',
-        })
-        .max(250),
-    factor: z.number(),
-    conversionsId: z.number().array().nonempty(),
-    //deliverablesId: z.number().array().nonempty(),
-})
+import { QuotationSchema } from '@/schemas'
 
 const FormWrapper = () => {
     // 1. Define your form.
-    const form = useForm<z.infer<typeof formSchema>>({
-        resolver: zodResolver(formSchema),
+    const form = useForm<z.infer<typeof QuotationSchema>>({
+        resolver: zodResolver(QuotationSchema),
         defaultValues: {
             factor: 1,
         },
     })
 
     // 2. Define a submit handler.
-    function onSubmit(values: z.infer<typeof formSchema>) {
+    function onSubmit(values: z.infer<typeof QuotationSchema>) {
         console.log(values)
     }
     return (
         <Form {...form}>
             <form
                 onSubmit={form.handleSubmit(onSubmit)}
-                className='max-w-md w-full flex flex-col gap-4'
+                className='max-w-lg w-full flex flex-col gap-4'
             >
                 {/* Name */}
                 <FormField
@@ -59,34 +47,54 @@ const FormWrapper = () => {
                         <FormItem>
                             <FormLabel>Nome da Cotação</FormLabel>
                             <FormControl>
-                                <Input className='lg:w-60' {...field} />
+                                <Input className='' {...field} />
                             </FormControl>
 
                             <FormMessage />
                         </FormItem>
                     )}
                 />
+                <div className='flex flex-row gap-5'>
+                    <FormField
+                        control={form.control}
+                        name='area'
+                        render={({ field }) => (
+                            <FormItem>
+                                <FormLabel>Área (m²)</FormLabel>
+                                <FormControl>
+                                    <Input
+                                        type='number'
+                                        className=''
+                                        {...field}
+                                    />
+                                </FormControl>
+
+                                <FormMessage />
+                            </FormItem>
+                        )}
+                    />
+                    {/* Fator de Complexidade */}
+                    <FormField
+                        control={form.control}
+                        name='factor'
+                        render={({ field }) => (
+                            <FormItem>
+                                <FormLabel>Fator</FormLabel>
+                                <FormControl>
+                                    <Input
+                                        type='number'
+                                        className=''
+                                        {...field}
+                                    />
+                                </FormControl>
+
+                                <FormMessage />
+                            </FormItem>
+                        )}
+                    />
+                </div>
                 {/* Area */}
-                <FormField
-                    control={form.control}
-                    name='area'
-                    render={({ field }) => (
-                        <FormItem>
-                            <FormLabel>Área (m²)</FormLabel>
-                            <FormControl>
-                                <Input
-                                    type='number'
-                                    className='lg:w-52'
-                                    {...field}
-                                />
-                            </FormControl>
-                            <FormDescription>
-                                This is your public display name.
-                            </FormDescription>
-                            <FormMessage />
-                        </FormItem>
-                    )}
-                />
+
                 {/* Description */}
                 <FormField
                     control={form.control}
@@ -106,14 +114,14 @@ const FormWrapper = () => {
                         </FormItem>
                     )}
                 />
-                {/* Fator de Complexidade */}
-
+                {/* DeliverableList */}
+                <ToggleGroupDeliverable form={form} />
                 {/* ConversionList */}
                 <GroupConversionForm form={form} />
 
-                {/* DeliverableList */}
-                <GroupDeliverableForm />
-                <Button type='submit'>Submit</Button>
+                <Button className='bg-primary-500 mt-3' type='submit'>
+                    Enviar
+                </Button>
             </form>
         </Form>
     )

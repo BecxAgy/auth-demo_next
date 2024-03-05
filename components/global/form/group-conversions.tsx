@@ -48,6 +48,7 @@ const GroupConversionForm = ({ form }: any) => {
                             Selecione as conversões de formato que deseja
                         </FormDescription>
                     </div>
+
                     {conversionsFormat.map(item => (
                         <FormField
                             key={item.id}
@@ -61,6 +62,7 @@ const GroupConversionForm = ({ form }: any) => {
                                     >
                                         <FormControl>
                                             <Checkbox
+                                                className='text-primary-500'
                                                 checked={field.value?.includes(
                                                     item.id,
                                                 )}

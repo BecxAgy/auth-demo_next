@@ -74,7 +74,7 @@ export function DataTable<TData, TValue>({
                 <div className='flex items-center justify-between'>
                     <div className='flex items-center py-4'>
                         <Input
-                            placeholder='Search by name...'
+                            placeholder='Procure pelo nome'
                             value={
                                 (table
                                     .getColumn('name')
@@ -93,7 +93,7 @@ export function DataTable<TData, TValue>({
                     <DropdownMenu>
                         <DropdownMenuTrigger asChild>
                             <Button variant='outline' className='ml-auto'>
-                                Columns
+                                Colunas
                             </Button>
                         </DropdownMenuTrigger>
                         <DropdownMenuContent align='end'>
@@ -126,7 +126,10 @@ export function DataTable<TData, TValue>({
                                 <TableRow key={headerGroup.id}>
                                     {headerGroup.headers.map(header => {
                                         return (
-                                            <TableHead key={header.id}>
+                                            <TableHead
+                                                className=''
+                                                key={header.id}
+                                            >
                                                 {header.isPlaceholder
                                                     ? null
                                                     : flexRender(
@@ -150,7 +153,10 @@ export function DataTable<TData, TValue>({
                                         }
                                     >
                                         {row.getVisibleCells().map(cell => (
-                                            <TableCell key={cell.id}>
+                                            <TableCell
+                                                key={cell.id}
+                                                className=''
+                                            >
                                                 {flexRender(
                                                     cell.column.columnDef.cell,
                                                     cell.getContext(),
@@ -165,7 +171,7 @@ export function DataTable<TData, TValue>({
                                         colSpan={columns.length}
                                         className='h-24 text-center'
                                     >
-                                        No results.
+                                        Sem Resultados
                                     </TableCell>
                                 </TableRow>
                             )}
@@ -181,7 +187,7 @@ export function DataTable<TData, TValue>({
                         onClick={() => table.previousPage()}
                         disabled={!table.getCanPreviousPage()}
                     >
-                        Previous
+                        Anterior
                     </Button>
                     <Button
                         variant='outline'
@@ -189,7 +195,7 @@ export function DataTable<TData, TValue>({
                         onClick={() => table.nextPage()}
                         disabled={!table.getCanNextPage()}
                     >
-                        Next
+                        Próximo
                     </Button>
                 </div>
             </div>

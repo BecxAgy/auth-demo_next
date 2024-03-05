@@ -9,19 +9,14 @@ export const sidebarLinks = [
         route: '/home',
     },
     {
-        label: 'Cotações',
+        label: 'Adicionar',
         icon: '/quotation-sqare.svg',
-        route: '/cotacoes',
-        subItems: [
-            {
-                label: 'Cadastro',
-                route: '/cotacoes/cadastro',
-            },
-            {
-                label: 'Gerenciamento',
-                route: '/cotacoes/gerenciamento',
-            },
-        ],
+        route: '/cotacoes/create',
+    },
+    {
+        label: 'Exibir',
+        icon: '/quotation-sqare.svg',
+        route: '/cotacoes/list',
     },
     // Adicione outros itens conforme necessário
 ]

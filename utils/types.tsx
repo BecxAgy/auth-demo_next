@@ -4,9 +4,11 @@ import { ColumnDef } from '@tanstack/react-table'
 export type QuotationView = {
     id: number
     name: string
-    technology_cost: number
-    scanner_rental: number
+    sale_cost: number
+    scanner_cost: number
+    actual_cost: number
     deadline: number
+    factor: number
 }
 
 export const columnsQuotation: ColumnDef<QuotationView>[] = [
@@ -19,15 +21,23 @@ export const columnsQuotation: ColumnDef<QuotationView>[] = [
         header: 'Nome',
     },
     {
-        accessorKey: 'technology_cost',
-        header: 'Custo Tecnologia',
+        accessorKey: 'sale_cost',
+        header: 'Custo de Venda',
     },
     {
-        accessorKey: 'scanner_rental',
-        header: 'Aluguel Scanner',
+        accessorKey: 'scanner_cost',
+        header: 'Custo do Scanner',
+    },
+    {
+        accessorKey: 'actual_cost',
+        header: 'Custo Atual',
     },
     {
         accessorKey: 'deadline',
         header: 'Prazo em dias úteis',
+    },
+    {
+        accessorKey: 'factor',
+        header: 'Fator',
     },
 ]
