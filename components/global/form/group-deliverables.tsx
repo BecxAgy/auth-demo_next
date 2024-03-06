@@ -15,18 +15,22 @@ import { Button } from '@/components/ui/button'
 import { number } from 'zod'
 
 export function ToggleGroupDeliverable({ form }: any) {
-    const [selectedDeliverable, setSelectedDeliverable] = useState('')
-    // Função para atualizar o valor selecionado quando um botão é clicado
-    const handleDeliverableSelection = (deliverableId: string) => {
-        console.log('deliverableId', deliverableId)
-        setSelectedDeliverable(deliverableId)
-        form.setValue('deliverableId', parseInt(deliverableId)) // Atualize o valor do campo no formulário
+    const [selectedDeliverables, setSelectedDeliverables] = useState<number[]>(
+        [],
+    )
+
+    const handleDeliverableSelection = (id: number) => {
+        if (selectedDeliverables.includes(id)) {
+            setSelectedDeliverables(selectedDeliverables.splice(id, 1))
+        } else {
+            setSelectedDeliverables([...selectedDeliverables, id])
+        }
     }
 
     return (
         <FormField
             control={form.control}
-            name='deliverableId'
+            name='deliverablesId'
             render={() => (
                 <FormItem>
                     <FormLabel className='text-base'>Entregáveis</FormLabel>
@@ -36,9 +40,9 @@ export function ToggleGroupDeliverable({ form }: any) {
                     <FormControl>
                         <div className='flex gap-10'>
                             <Card
-                                onClick={() => handleDeliverableSelection('1')}
-                                className={` hover:border-primary-500 hover:text-primary-500 px-10 py-5 ${
-                                    selectedDeliverable === '1'
+                                onClick={() => handleDeliverableSelection(1)}
+                                className={`hover:border-primary-500 hover:text-primary-500 px-10 py-5 ${
+                                    selectedDeliverables.includes(1)
                                         ? 'bg-primary-500 border-none hover:text-white text-white'
                                         : ''
                                 }`}
@@ -47,9 +51,9 @@ export function ToggleGroupDeliverable({ form }: any) {
                             </Card>
 
                             <Card
-                                onClick={() => handleDeliverableSelection('2')}
+                                onClick={() => handleDeliverableSelection(2)}
                                 className={`px-10 py-5 hover:border-primary-500 hover:text-primary-500 ${
-                                    selectedDeliverable === '2'
+                                    selectedDeliverables.includes(2)
                                         ? 'bg-primary-500 border-none hover:text-white text-white'
                                         : ''
                                 }`}
