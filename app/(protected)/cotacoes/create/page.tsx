@@ -4,7 +4,7 @@ import React from 'react'
 
 const CreatePage = () => {
     return (
-        <Card className=' flex justify-center flex-col items-center  border-none py-5'>
+        <Card className=' flex justify-center flex-col items-center border-none py-5'>
             <FormWrapper />
         </Card>
     )
