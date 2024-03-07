@@ -18,35 +18,43 @@ import { ToggleGroupDeliverable } from './group-deliverables'
 import GroupConversionForm from './group-conversions'
 
 export const QuotationSchema = z.object({
-    name: z.string().min(2, {
-        message: 'Username must be at least 2 characters.',
-    }),
+    name: z
+        .string()
+        .min(2, {
+            message: 'O nome da cotação deve ter pelo menos 2 caracteres',
+        })
+        .nonempty('O nome da cotação é obrigatório'),
     area: z.preprocess(
         a => parseInt(z.string().parse(a), 10),
-        z.number().nonnegative({ message: 'Area must be a positive number' }),
+        z.number().nonnegative('A área deve ser um número positivo'),
     ),
-    factor: z.preprocess(a => parseInt(z.string().parse(a), 10), z.number()),
+    factor: z.preprocess(
+        a => parseInt(z.string().parse(a), 10),
+        z
+            .number()
+            .nonnegative('O fator de complexidade deve ser um número positivo'),
+    ),
     description: z
-        .string()
+        .string({ required_error: 'A descrição é obrigatória' })
         .min(10, { message: 'A descrição deve ter pelo menos 10 caracteres' })
         .max(250, {
             message: 'A descrição não pode ter mais de 250 caracteres',
         }),
+
     conversionsId: z
-        .array(z.number())
+        .array(
+            z.number({ required_error: 'A lista de conversões é obrigatória' }),
+        )
         .nonempty({ message: 'A lista de conversões não pode estar vazia' }),
 
     deliverablesId: z
-        .array(z.number())
+        .array(z.number({ required_error: 'A forma de entrega é obrigatória' }))
         .nonempty({ message: 'A forma de entrega não pode estar vazia' }),
 })
-
-const FormWrapper = () => {
+const FormTeste = () => {
     const form = useForm<z.infer<typeof QuotationSchema>>({
         resolver: zodResolver(QuotationSchema),
-        defaultValues: {
-            factor: 1,
-        },
+        defaultValues: {},
     })
 
     function onSubmit(values: any) {
@@ -86,7 +94,7 @@ const FormWrapper = () => {
                                     />
                                 </FormControl>
 
-                                <FormMessage />
+                                <FormMessage className='text-red-600' />
                             </FormItem>
                         )}
                     />
@@ -105,7 +113,7 @@ const FormWrapper = () => {
                                     />
                                 </FormControl>
 
-                                <FormMessage />
+                                <FormMessage className='text-red-600' />
                             </FormItem>
                         )}
                     />
@@ -121,7 +129,7 @@ const FormWrapper = () => {
                             <FormLabel>Descrição</FormLabel>
                             <FormControl>
                                 <Textarea
-                                    placeholder='Insira a descrição da nuvem a ser cotada'
+                                    placeholder='Tell us a little bit about yourself'
                                     className=''
                                     {...field}
                                 />
@@ -144,4 +152,4 @@ const FormWrapper = () => {
     )
 }
 
-export default FormWrapper
+export default FormTeste

@@ -72,7 +72,7 @@ export function DataTable<TData, TValue>({
                 {/* Filters */}
 
                 <div className='flex items-center justify-between'>
-                    <div className='flex items-center py-4'>
+                    <div className='flex items-center py-4 text-white'>
                         <Input
                             placeholder='Procure pelo nome'
                             value={
@@ -96,7 +96,10 @@ export function DataTable<TData, TValue>({
                                 Colunas
                             </Button>
                         </DropdownMenuTrigger>
-                        <DropdownMenuContent align='end'>
+                        <DropdownMenuContent
+                            className='bg-dark-2 text-white'
+                            align='end'
+                        >
                             {table
                                 .getAllColumns()
                                 .filter(column => column.getCanHide())
@@ -110,7 +113,8 @@ export function DataTable<TData, TValue>({
                                                 column.toggleVisibility(!!value)
                                             }
                                         >
-                                            {column.id}
+                                            {column.columnDef.header ||
+                                                'Sem Colunas'}
                                         </DropdownMenuCheckboxItem>
                                     )
                                 })}

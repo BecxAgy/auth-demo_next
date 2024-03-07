@@ -99,7 +99,7 @@ const GroupConversionForm = ({ form }: any) => {
                             }}
                         />
                     ))}
-                    <FormMessage />
+                    <FormMessage className='text-red-600' />
                 </FormItem>
             )}
         />

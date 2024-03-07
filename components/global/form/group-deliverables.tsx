@@ -8,11 +8,10 @@ import {
     FormField,
     FormItem,
     FormLabel,
+    FormMessage,
 } from '@/components/ui/form'
 
-import { useState } from 'react'
-import { Button } from '@/components/ui/button'
-import { number } from 'zod'
+import { useEffect, useState } from 'react'
 
 export function ToggleGroupDeliverable({ form }: any) {
     const [selectedDeliverables, setSelectedDeliverables] = useState<number[]>(
@@ -20,12 +19,29 @@ export function ToggleGroupDeliverable({ form }: any) {
     )
 
     const handleDeliverableSelection = (id: number) => {
-        if (selectedDeliverables.includes(id)) {
-            setSelectedDeliverables(selectedDeliverables.splice(id, 1))
+        //se a lista nao estiver cheia
+        if (selectedDeliverables.length < 2) {
+            //se a lista tiver o id é porque estou desmarcando
+            if (selectedDeliverables.includes(id)) {
+                setSelectedDeliverables(
+                    selectedDeliverables.filter(item => item !== id),
+                )
+            } else {
+                //se não tiver o id é porque estou marcando
+                setSelectedDeliverables([...selectedDeliverables, id])
+            }
         } else {
-            setSelectedDeliverables([...selectedDeliverables, id])
+            if (selectedDeliverables.includes(id)) {
+                setSelectedDeliverables(
+                    selectedDeliverables.filter(item => item !== id),
+                )
+            }
         }
     }
+
+    useEffect(() => {
+        form.setValue('deliverablesId', selectedDeliverables)
+    }, [selectedDeliverables])
 
     return (
         <FormField
@@ -62,6 +78,7 @@ export function ToggleGroupDeliverable({ form }: any) {
                             </Card>
                         </div>
                     </FormControl>
+                    <FormMessage className='text-red-600' />
                 </FormItem>
             )}
         />

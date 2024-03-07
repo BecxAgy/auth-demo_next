@@ -20,13 +20,10 @@ async function getQuotations(): Promise<QuotationView[]> {
 const List = async () => {
     const data = await getQuotations()
     return (
-        <div className='flex justify-center w-full'>
-            <Card className='shadow-md border-none bg-dark-2 p-10'>
-                <CardHeader>
-                    <h1 className='font-semibold text-2xl'>Cotações</h1>
-                </CardHeader>
+        <div className='flex  justify-center w-full'>
+            <Card className='shadow-md border-none  bg-dark-2 p-10'>
                 <CardContent>
-                    <DataTable columns={columnsQuotation} data={[]} />
+                    <DataTable columns={columnsQuotation} data={data} />
                 </CardContent>
             </Card>
         </div>
