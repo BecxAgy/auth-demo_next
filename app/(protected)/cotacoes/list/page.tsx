@@ -18,6 +18,7 @@ async function getQuotations(): Promise<QuotationView[]> {
 }
 
 const List = async () => {
+    //fixme: this is not working
     const data = await getQuotations()
     return (
         <div className='flex  justify-center w-full'>

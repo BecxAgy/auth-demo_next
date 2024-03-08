@@ -113,8 +113,7 @@ export function DataTable<TData, TValue>({
                                                 column.toggleVisibility(!!value)
                                             }
                                         >
-                                            {column.columnDef.header ||
-                                                'Sem Colunas'}
+                                            {column.columnDef.header}
                                         </DropdownMenuCheckboxItem>
                                     )
                                 })}
