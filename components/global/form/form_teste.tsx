@@ -41,13 +41,13 @@ export const QuotationSchema = z.object({
             message: 'A descrição não pode ter mais de 250 caracteres',
         }),
 
-    conversionsId: z
+    conversionId: z
         .array(
             z.number({ required_error: 'A lista de conversões é obrigatória' }),
         )
         .nonempty({ message: 'A lista de conversões não pode estar vazia' }),
 
-    deliverablesId: z
+    deliverableId: z
         .array(z.number({ required_error: 'A forma de entrega é obrigatória' }))
         .nonempty({ message: 'A forma de entrega não pode estar vazia' }),
 })
@@ -57,8 +57,23 @@ const FormTeste = () => {
         defaultValues: {},
     })
 
-    function onSubmit(values: any) {
-        console.log(values)
+    const onSubmit = async (values: any) => {
+        debugger
+        const res = await fetch('http://localhost:4006/api/cloud/', {
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/json',
+            },
+            body: JSON.stringify(values),
+        })
+            .then(response => response.json())
+            .then(data => {
+                console.log('Success:', data)
+            })
+            .catch(error => {
+                console.error('Error:', error)
+            })
+        console.log('Resposta api', res)
     }
 
     return (

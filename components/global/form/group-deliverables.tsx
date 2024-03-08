@@ -40,13 +40,13 @@ export function ToggleGroupDeliverable({ form }: any) {
     }
 
     useEffect(() => {
-        form.setValue('deliverablesId', selectedDeliverables)
+        form.setValue('deliverableId', selectedDeliverables)
     }, [selectedDeliverables])
 
     return (
         <FormField
             control={form.control}
-            name='deliverablesId'
+            name='deliverableId'
             render={() => (
                 <FormItem>
                     <FormLabel className='text-base'>Entregáveis</FormLabel>

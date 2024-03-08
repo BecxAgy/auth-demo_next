@@ -39,7 +39,7 @@ const GroupConversionForm = ({ form }: any) => {
     return (
         <FormField
             control={form.control}
-            name='conversionsId'
+            name='conversionId'
             render={() => (
                 <FormItem>
                     <div className='mb-4'>
@@ -53,7 +53,7 @@ const GroupConversionForm = ({ form }: any) => {
                         <FormField
                             key={item.id}
                             control={form.control}
-                            name='conversionsId'
+                            name='conversionId'
                             render={({ field }) => {
                                 return (
                                     <FormItem
