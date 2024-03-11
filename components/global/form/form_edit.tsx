@@ -51,7 +51,8 @@ export const QuotationSchema = z.object({
         .array(z.number({ required_error: 'A forma de entrega é obrigatória' }))
         .nonempty({ message: 'A forma de entrega não pode estar vazia' }),
 })
-const FormTeste = () => {
+
+const FormEdit = () => {
     const form = useForm<z.infer<typeof QuotationSchema>>({
         resolver: zodResolver(QuotationSchema),
         defaultValues: {},
@@ -64,6 +65,7 @@ const FormTeste = () => {
             headers: {
                 'Content-Type': 'application/json',
             },
+            body: JSON.stringify(values),
         })
             .then(response => response.json())
             .then(data => {
@@ -166,4 +168,4 @@ const FormTeste = () => {
     )
 }
 
-export default FormTeste
+export default FormEdit

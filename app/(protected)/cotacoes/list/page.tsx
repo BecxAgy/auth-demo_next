@@ -1,4 +1,5 @@
 import { DataTable } from '@/components/global/data_table'
+import EditSheet from '@/components/global/edit-sheet'
 import { Card, CardContent, CardHeader } from '@/components/ui/card'
 import { QuotationView, columnsQuotation } from '@/utils/types'
 
@@ -70,6 +71,17 @@ const List = async () => {
                     />
                 </CardContent>
             </Card>
+            <EditSheet
+                quotation={{
+                    id: 4,
+                    name: 'Product D',
+                    sale_cost: 80,
+                    scanner_cost: 70,
+                    actual_cost: 60,
+                    deadline: 5,
+                    factor: 1.1,
+                }}
+            />
         </div>
     )
 }

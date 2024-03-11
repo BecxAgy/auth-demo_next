@@ -9,10 +9,10 @@ import {
     DropdownMenuSeparator,
     DropdownMenuTrigger,
 } from '@/components/ui/dropdown-menu'
-
 import { MoreHorizontal, ArrowUpDown } from 'lucide-react'
-
 import { Button } from '@/components/ui/button'
+import EditSheet from '@/components/global/edit-sheet'
+
 export type QuotationView = {
     id: number
     name: string
@@ -67,7 +67,7 @@ export const columnsQuotation: ColumnDef<QuotationView>[] = [
     {
         id: 'actions',
         cell: ({ row }) => {
-            const user = row.original
+            const quotation = row.original
 
             return (
                 <DropdownMenu>
@@ -83,7 +83,7 @@ export const columnsQuotation: ColumnDef<QuotationView>[] = [
                         className='bg-dark-2 text-white border-none shadow-lg'
                         align='end'
                     >
-                        <DropdownMenuItem>Visualizar </DropdownMenuItem>
+                        <DropdownMenuItem>Visualizar</DropdownMenuItem>
                         <DropdownMenuSeparator />
                         <DropdownMenuItem>Editar</DropdownMenuItem>
                         <DropdownMenuSeparator />
