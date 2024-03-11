@@ -88,37 +88,6 @@ export function DataTable<TData, TValue>({
                             className='max-w-sm'
                         />
                     </div>
-
-                    {/* Column visibility */}
-                    <DropdownMenu>
-                        <DropdownMenuTrigger asChild>
-                            <Button variant='outline' className='ml-auto'>
-                                Colunas
-                            </Button>
-                        </DropdownMenuTrigger>
-                        <DropdownMenuContent
-                            className='bg-dark-2 text-white'
-                            align='end'
-                        >
-                            {table
-                                .getAllColumns()
-                                .filter(column => column.getCanHide())
-                                .map(column => {
-                                    return (
-                                        <DropdownMenuCheckboxItem
-                                            key={column.id}
-                                            className='capitalize'
-                                            checked={column.getIsVisible()}
-                                            onCheckedChange={(value: any) =>
-                                                column.toggleVisibility(!!value)
-                                            }
-                                        >
-                                            {column.columnDef.header}
-                                        </DropdownMenuCheckboxItem>
-                                    )
-                                })}
-                        </DropdownMenuContent>
-                    </DropdownMenu>
                 </div>
 
                 {/* Table */}

@@ -1,6 +1,18 @@
 'use client'
-import { ColumnDef } from '@tanstack/react-table'
 
+import { ColumnDef } from '@tanstack/react-table'
+import {
+    DropdownMenu,
+    DropdownMenuContent,
+    DropdownMenuItem,
+    DropdownMenuLabel,
+    DropdownMenuSeparator,
+    DropdownMenuTrigger,
+} from '@/components/ui/dropdown-menu'
+
+import { MoreHorizontal, ArrowUpDown } from 'lucide-react'
+
+import { Button } from '@/components/ui/button'
 export type QuotationView = {
     id: number
     name: string
@@ -18,7 +30,19 @@ export const columnsQuotation: ColumnDef<QuotationView>[] = [
     },
     {
         accessorKey: 'name',
-        header: 'Nome',
+        header: ({ column }) => {
+            return (
+                <Button
+                    variant='ghost'
+                    onClick={() =>
+                        column.toggleSorting(column.getIsSorted() === 'asc')
+                    }
+                >
+                    Name
+                    <ArrowUpDown className='ml-2 h-4 w-4' />
+                </Button>
+            )
+        },
     },
     {
         accessorKey: 'sale_cost',
@@ -39,5 +63,34 @@ export const columnsQuotation: ColumnDef<QuotationView>[] = [
     {
         accessorKey: 'factor',
         header: 'Fator',
+    },
+    {
+        id: 'actions',
+        cell: ({ row }) => {
+            const user = row.original
+
+            return (
+                <DropdownMenu>
+                    <DropdownMenuTrigger asChild>
+                        <Button
+                            variant='ghost'
+                            className='text-primary-500 h-8 w-8 p-0'
+                        >
+                            <MoreHorizontal className='h-4 w-4' />
+                        </Button>
+                    </DropdownMenuTrigger>
+                    <DropdownMenuContent
+                        className='bg-dark-2 text-white border-none shadow-lg'
+                        align='end'
+                    >
+                        <DropdownMenuItem>Visualizar </DropdownMenuItem>
+                        <DropdownMenuSeparator />
+                        <DropdownMenuItem>Editar</DropdownMenuItem>
+                        <DropdownMenuSeparator />
+                        <DropdownMenuItem>Excluir</DropdownMenuItem>
+                    </DropdownMenuContent>
+                </DropdownMenu>
+            )
+        },
     },
 ]
