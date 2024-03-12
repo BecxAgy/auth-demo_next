@@ -12,6 +12,7 @@ import { QuotationView } from '@/utils/types'
 import FormTeste from './form/form_teste'
 import { getQuotationById } from '@/lib/features/quotations/quotation-slice'
 import { SheetContext } from '@/lib/contexts/sheet'
+import FormEdit from './form/form_edit'
 
 const EditSheet = () => {
     const { openSheet, setOpenSheet, cloud } = useContext(SheetContext)
@@ -22,9 +23,9 @@ const EditSheet = () => {
             </SheetTrigger>
             <SheetContent className='border-none shadow-lg text-white bg-dark-2 w-[600px] sm:w-[700px]'>
                 <SheetHeader>
-                    <SheetTitle> {cloud?.area}</SheetTitle>
+                    <SheetTitle> Editar Cotação</SheetTitle>
                     <SheetDescription>
-                        <FormTeste />
+                        <FormEdit cloud={cloud} />
                     </SheetDescription>
                 </SheetHeader>
             </SheetContent>

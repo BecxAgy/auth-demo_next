@@ -16,6 +16,7 @@ import { Textarea } from '@/components/ui/textarea'
 import { Button } from '@/components/ui/button'
 import { ToggleGroupDeliverable } from './group-deliverables'
 import GroupConversionForm from './group-conversions'
+import { CloudState } from '@/utils/types'
 
 export const QuotationSchema = z.object({
     name: z
@@ -52,7 +53,7 @@ export const QuotationSchema = z.object({
         .nonempty({ message: 'A forma de entrega não pode estar vazia' }),
 })
 
-const FormEdit = () => {
+const FormEdit = ({ cloud }: { cloud: CloudState }) => {
     const form = useForm<z.infer<typeof QuotationSchema>>({
         resolver: zodResolver(QuotationSchema),
         defaultValues: {},
@@ -60,20 +61,6 @@ const FormEdit = () => {
 
     const onSubmit = async (values: any) => {
         debugger
-        const res = await fetch('http://localhost:4006/api/cloud/', {
-            method: 'PUT',
-            headers: {
-                'Content-Type': 'application/json',
-            },
-        })
-            .then(response => response.json())
-            .then(data => {
-                console.log('Success:', data)
-            })
-            .catch(error => {
-                console.error('Error:', error)
-            })
-        console.log('Resposta api', res)
     }
 
     return (
@@ -87,7 +74,11 @@ const FormEdit = () => {
                         <FormItem>
                             <FormLabel>Nome da Cotação</FormLabel>
                             <FormControl>
-                                <Input className='' {...field} />
+                                <Input
+                                    className=''
+                                    defaultValue={cloud.name}
+                                    {...field}
+                                />
                             </FormControl>
 
                             <FormMessage className='text-red-600' />
@@ -103,6 +94,7 @@ const FormEdit = () => {
                                 <FormLabel>Área (m²)</FormLabel>
                                 <FormControl>
                                     <Input
+                                        defaultValue={cloud.area}
                                         type='number'
                                         className=''
                                         {...field}
@@ -122,6 +114,7 @@ const FormEdit = () => {
                                 <FormLabel>Fator</FormLabel>
                                 <FormControl>
                                     <Input
+                                        defaultValue={cloud.area}
                                         type='number'
                                         className=''
                                         {...field}
@@ -144,6 +137,7 @@ const FormEdit = () => {
                             <FormLabel>Descrição</FormLabel>
                             <FormControl>
                                 <Textarea
+                                    defaultValue={cloud.area}
                                     placeholder='Tell us a little bit about yourself'
                                     className=''
                                     {...field}
@@ -156,7 +150,7 @@ const FormEdit = () => {
                 />
 
                 {/* DeliverableList */}
-                <ToggleGroupDeliverable form={form} />
+                <ToggleGroupDeliverable form={form}  />
                 {/* ConversionList */}
                 <GroupConversionForm form={form} />
                 <Button className='bg-primary-500 mt-3' type='submit'>
