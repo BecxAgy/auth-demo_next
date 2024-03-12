@@ -1,33 +1,24 @@
 import { quotationService } from '@/lib/service/quotationService'
-import { createAsyncThunk, createSlice } from '@reduxjs/toolkit'
+import { QuotationView } from '@/utils/types'
+import { Reducer, createAsyncThunk, createSlice } from '@reduxjs/toolkit'
 
 type InitialState = {
-    quotation: QuotationState
-    quotations: QuotationState[]
+    quotation: QuotationView
+    quotations: QuotationView[]
     success: boolean
     loading: boolean
-}
-
-type QuotationState = {
-    id: number
-    name: string
-    area: number
-    factor: number
-    description: string
-    deliverable_id: Array<number>
-    conversion_id: Array<number>
 }
 
 const InitialState = {
     quotation: {
         id: 0,
         name: '',
-        area: 0,
+        sale_cost: 0,
+        scanner_cost: 0,
+        actual_cost: 0,
+        deadline: 0,
         factor: 0,
-        description: '',
-        deliverable_id: [],
-        conversion_id: [],
-    } as QuotationState,
+    } as QuotationView,
     quotations: [],
     error: null,
     success: false,
@@ -37,8 +28,8 @@ const InitialState = {
 export const getAllQuotations = createAsyncThunk(
     'project/getall',
     async (_, thunkAPI) => {
-        //const data = await quotationsService.getQuotations ()
-        //return data
+        const data = await quotationService.getAllQuotations()
+        return data
     },
 )
 
@@ -71,3 +62,5 @@ export const quotationSlice = createSlice({
             })
     },
 })
+
+export default quotationSlice.reducer

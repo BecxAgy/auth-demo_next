@@ -12,6 +12,7 @@ export const quotationService = {
 
     getAllQuotations: async () => {
         try {
+            debugger
             const response = await fetch(`${API_URL}/`)
             return response.json()
         } catch (error) {

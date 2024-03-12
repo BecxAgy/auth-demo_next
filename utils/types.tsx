@@ -22,6 +22,15 @@ export type QuotationView = {
     deadline: number
     factor: number
 }
+export type CloudState = {
+    id: number
+    name: string
+    area: number
+    factor: number
+    description: string
+    deliverable_id: Array<number>
+    conversion_id: Array<number>
+}
 
 export const columnsQuotation: ColumnDef<QuotationView>[] = [
     {

@@ -1,22 +1,14 @@
+'use client'
 import { DataTable } from '@/components/global/data_table'
 import EditSheet from '@/components/global/edit-sheet'
 import { Card, CardContent, CardHeader } from '@/components/ui/card'
+import { getAllQuotations } from '@/lib/features/quotations/quotation-slice'
+import { AppDispatch, RootState } from '@/lib/store'
 import { QuotationView, columnsQuotation } from '@/utils/types'
 
-import React from 'react'
-async function getQuotations(): Promise<QuotationView[]> {
-    let data: QuotationView[] = []
-    const res = await fetch('http://localhost:4006/api/resume/')
-        .then(res => res.json())
-        .catch(err => console.log('error', err))
+import React, { useEffect } from 'react'
+import { useDispatch, useSelector } from 'react-redux'
 
-    if (res) {
-        console.log('res', res)
-        data = res
-    }
-
-    return data
-}
 const quotationData: QuotationView[] = [
     {
         id: 1,
@@ -58,17 +50,22 @@ const quotationData: QuotationView[] = [
 
 // You can use the above data to populate your table
 
-const List = async () => {
+const List = () => {
     //fixme: this is not working
     //const data = await getQuotations()
+    const dispatch = useDispatch<AppDispatch>()
+    const { quotations } = useSelector((state: RootState) => state.quotation)
+
+    useEffect(() => {
+        debugger
+        dispatch(getAllQuotations())
+        console.log(quotations)
+    }, [])
     return (
         <div className='flex  justify-center w-full'>
             <Card className='shadow-md border-none  bg-dark-2 p-10'>
                 <CardContent>
-                    <DataTable
-                        columns={columnsQuotation}
-                        data={quotationData}
-                    />
+                    <DataTable columns={columnsQuotation} data={quotations} />
                 </CardContent>
             </Card>
             <EditSheet
