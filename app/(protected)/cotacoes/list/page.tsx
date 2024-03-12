@@ -2,6 +2,7 @@
 import { DataTable } from '@/components/global/data_table'
 import EditSheet from '@/components/global/edit-sheet'
 import { Card, CardContent, CardHeader } from '@/components/ui/card'
+import { SheetProvider } from '@/lib/contexts/sheet'
 import { getAllQuotations } from '@/lib/features/quotations/quotation-slice'
 import { AppDispatch, RootState } from '@/lib/store'
 import { QuotationView, columnsQuotation } from '@/utils/types'
@@ -62,24 +63,20 @@ const List = () => {
         console.log(quotations)
     }, [])
     return (
-        <div className='flex  justify-center w-full'>
-            <Card className='shadow-md border-none  bg-dark-2 p-10'>
-                <CardContent>
-                    <DataTable columns={columnsQuotation} data={quotations} />
-                </CardContent>
-            </Card>
-            <EditSheet
-                quotation={{
-                    id: 4,
-                    name: 'Product D',
-                    sale_cost: 80,
-                    scanner_cost: 70,
-                    actual_cost: 60,
-                    deadline: 5,
-                    factor: 1.1,
-                }}
-            />
-        </div>
+        <SheetProvider>
+            <div className='flex  justify-center w-full'>
+                <Card className='shadow-md border-none  bg-dark-2 p-10'>
+                    <CardContent>
+                        <DataTable
+                            columns={columnsQuotation}
+                            data={quotations}
+                        />
+                    </CardContent>
+                </Card>
+
+                <EditSheet />
+            </div>
+        </SheetProvider>
     )
 }
 

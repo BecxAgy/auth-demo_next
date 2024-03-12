@@ -61,11 +61,10 @@ const FormEdit = () => {
     const onSubmit = async (values: any) => {
         debugger
         const res = await fetch('http://localhost:4006/api/cloud/', {
-            method: 'POST',
+            method: 'PUT',
             headers: {
                 'Content-Type': 'application/json',
             },
-            body: JSON.stringify(values),
         })
             .then(response => response.json())
             .then(data => {

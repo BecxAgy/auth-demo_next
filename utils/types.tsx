@@ -12,6 +12,10 @@ import {
 import { MoreHorizontal, ArrowUpDown } from 'lucide-react'
 import { Button } from '@/components/ui/button'
 import EditSheet from '@/components/global/edit-sheet'
+import { useContext } from 'react'
+import { SheetContext } from '@/lib/contexts/sheet'
+import { Console } from 'console'
+import ToogleProvider from '@/components/global/toogle-provider'
 
 export type QuotationView = {
     id: number
@@ -94,7 +98,11 @@ export const columnsQuotation: ColumnDef<QuotationView>[] = [
                     >
                         <DropdownMenuItem>Visualizar</DropdownMenuItem>
                         <DropdownMenuSeparator />
-                        <DropdownMenuItem>Editar</DropdownMenuItem>
+                        <DropdownMenuItem>
+                            <ToogleProvider id={quotation.id}>
+                                Editar
+                            </ToogleProvider>
+                        </DropdownMenuItem>
                         <DropdownMenuSeparator />
                         <DropdownMenuItem>Excluir</DropdownMenuItem>
                     </DropdownMenuContent>

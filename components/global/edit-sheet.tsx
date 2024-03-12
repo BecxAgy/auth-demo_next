@@ -1,5 +1,5 @@
 'use client'
-import React, { useEffect, useState } from 'react'
+import React, { useContext, useEffect, useState } from 'react'
 import {
     Sheet,
     SheetContent,
@@ -11,19 +11,18 @@ import {
 import { QuotationView } from '@/utils/types'
 import FormTeste from './form/form_teste'
 import { getQuotationById } from '@/lib/features/quotations/quotation-slice'
-interface EditSheetProps {
-    quotation: QuotationView
-}
-const EditSheet: React.FC<EditSheetProps> = ({ quotation }) => {
-    const [open, setOpen] = useState(false)
+import { SheetContext } from '@/lib/contexts/sheet'
+
+const EditSheet = () => {
+    const { openSheet, setOpenSheet, cloud } = useContext(SheetContext)
     return (
-        <Sheet open={open} onOpenChange={setOpen}>
+        <Sheet open={openSheet} onOpenChange={setOpenSheet}>
             <SheetTrigger asChild>
                 <span>Editar</span>
             </SheetTrigger>
             <SheetContent className='border-none shadow-lg text-white bg-dark-2 w-[600px] sm:w-[700px]'>
                 <SheetHeader>
-                    <SheetTitle>Editar Cotação</SheetTitle>
+                    <SheetTitle> {cloud?.area}</SheetTitle>
                     <SheetDescription>
                         <FormTeste />
                     </SheetDescription>
