@@ -17,7 +17,7 @@ export default auth(req => {
     const isAuthRoute = authRoutes.includes(nextUrl.pathname)
 
     if (isApiAuthRoute) {
-        return null
+        return
     }
     //SE NAO ESTÁ LOGADO E NAO ESTÁ NUMA ROTA PUBLICA
     if (!isLoggedIn && !isPublicRoute) {
