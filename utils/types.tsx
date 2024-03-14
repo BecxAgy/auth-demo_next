@@ -16,6 +16,7 @@ import { useContext } from 'react'
 import { SheetContext } from '@/lib/contexts/sheet'
 import { Console } from 'console'
 import ToogleProvider from '@/components/global/toogle-provider'
+import RemoveButton from '@/components/global/remove-button'
 
 export type QuotationView = {
     id: number
@@ -32,8 +33,20 @@ export type CloudState = {
     area: number
     factor: number
     description: string
-    deliverable_id: Array<number>
-    conversion_id: Array<number>
+    Deliverables: Array<Deliverable>
+    Conversions: Array<Conversion>
+}
+
+export type Conversion = {
+    id: number
+    type: string
+    price: number
+}
+
+export type Deliverable = {
+    id: number
+    type: string
+    price: number
 }
 
 export const columnsQuotation: ColumnDef<QuotationView>[] = [
@@ -104,7 +117,11 @@ export const columnsQuotation: ColumnDef<QuotationView>[] = [
                             </ToogleProvider>
                         </DropdownMenuItem>
                         <DropdownMenuSeparator />
-                        <DropdownMenuItem>Excluir</DropdownMenuItem>
+                        <DropdownMenuItem>
+                            <RemoveButton id={quotation.id}>
+                                Excluir
+                            </RemoveButton>
+                        </DropdownMenuItem>
                     </DropdownMenuContent>
                 </DropdownMenu>
             )

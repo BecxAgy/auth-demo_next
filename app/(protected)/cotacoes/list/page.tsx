@@ -3,7 +3,7 @@ import { DataTable } from '@/components/global/data_table'
 import EditSheet from '@/components/global/edit-sheet'
 import { Card, CardContent, CardHeader } from '@/components/ui/card'
 import { SheetProvider } from '@/lib/contexts/sheet'
-import { getAllQuotations } from '@/lib/features/quotations/quotation-slice'
+import { getAllQuotations } from '@/lib/features/cloud-slice'
 import { AppDispatch, RootState } from '@/lib/store'
 import { QuotationView, columnsQuotation } from '@/utils/types'
 
@@ -12,7 +12,7 @@ import { useDispatch, useSelector } from 'react-redux'
 
 const quotationData: QuotationView[] = [
     {
-        id: 1,
+        id: 8,
         name: 'Product A',
         sale_cost: 100,
         scanner_cost: 90,
@@ -52,16 +52,16 @@ const quotationData: QuotationView[] = [
 // You can use the above data to populate your table
 
 const List = () => {
-    //fixme: this is not working
-    //const data = await getQuotations()
     const dispatch = useDispatch<AppDispatch>()
-    const { quotations } = useSelector((state: RootState) => state.quotation)
+
+    const { success, quotations, cloud } = useSelector(
+        (state: RootState) => state.cloud,
+    )
 
     useEffect(() => {
         debugger
         dispatch(getAllQuotations())
-        console.log(quotations)
-    }, [])
+    }, [dispatch, success])
     return (
         <SheetProvider>
             <div className='flex  justify-center w-full'>

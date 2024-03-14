@@ -1,11 +1,9 @@
 import { configureStore } from '@reduxjs/toolkit'
-import quotationSlice from './features/quotations/quotation-slice'
-import cloudSlice from './features/quotations/cloud-slice'
+import cloudSlice from './features/cloud-slice'
 
 export const makeStore = () => {
     return configureStore({
         reducer: {
-            quotation: quotationSlice,
             cloud: cloudSlice,
         },
     })

@@ -17,43 +17,17 @@ import { Button } from '@/components/ui/button'
 import { ToggleGroupDeliverable } from './group-deliverables'
 import GroupConversionForm from './group-conversions'
 import { CloudState } from '@/utils/types'
-
-export const QuotationSchema = z.object({
-    name: z
-        .string()
-        .min(2, {
-            message: 'O nome da cotação deve ter pelo menos 2 caracteres',
-        })
-        .nonempty('O nome da cotação é obrigatório'),
-    area: z.preprocess(
-        a => parseInt(z.string().parse(a), 10),
-        z.number().nonnegative('A área deve ser um número positivo'),
-    ),
-    factor: z.preprocess(
-        a => parseInt(z.string().parse(a), 10),
-        z
-            .number()
-            .nonnegative('O fator de complexidade deve ser um número positivo'),
-    ),
-    description: z
-        .string({ required_error: 'A descrição é obrigatória' })
-        .min(10, { message: 'A descrição deve ter pelo menos 10 caracteres' })
-        .max(250, {
-            message: 'A descrição não pode ter mais de 250 caracteres',
-        }),
-
-    conversionId: z
-        .array(
-            z.number({ required_error: 'A lista de conversões é obrigatória' }),
-        )
-        .nonempty({ message: 'A lista de conversões não pode estar vazia' }),
-
-    deliverableId: z
-        .array(z.number({ required_error: 'A forma de entrega é obrigatória' }))
-        .nonempty({ message: 'A forma de entrega não pode estar vazia' }),
-})
+import { QuotationSchema } from '@/schemas'
+import { useDispatch } from 'react-redux'
+import { AppDispatch } from '@/lib/store'
+import { editCloud } from '@/lib/features/cloud-slice'
+import { use, useContext, useEffect } from 'react'
+import { SheetContext } from '@/lib/contexts/sheet'
 
 const FormEdit = ({ cloud }: { cloud: CloudState }) => {
+    const dispatch = useDispatch<AppDispatch>()
+    const { toogleSheet, setCloud } = useContext(SheetContext)
+
     const form = useForm<z.infer<typeof QuotationSchema>>({
         resolver: zodResolver(QuotationSchema),
         defaultValues: {},
@@ -61,6 +35,8 @@ const FormEdit = ({ cloud }: { cloud: CloudState }) => {
 
     const onSubmit = async (values: any) => {
         debugger
+        dispatch(editCloud({ id: cloud.id, ...values }))
+        toogleSheet()
     }
 
     return (
@@ -76,7 +52,7 @@ const FormEdit = ({ cloud }: { cloud: CloudState }) => {
                             <FormControl>
                                 <Input
                                     className=''
-                                    defaultValue={cloud.name}
+                                    defaultValue={cloud?.name}
                                     {...field}
                                 />
                             </FormControl>
@@ -94,7 +70,7 @@ const FormEdit = ({ cloud }: { cloud: CloudState }) => {
                                 <FormLabel>Área (m²)</FormLabel>
                                 <FormControl>
                                     <Input
-                                        defaultValue={cloud.area}
+                                        defaultValue={cloud?.area}
                                         type='number'
                                         className=''
                                         {...field}
@@ -114,7 +90,7 @@ const FormEdit = ({ cloud }: { cloud: CloudState }) => {
                                 <FormLabel>Fator</FormLabel>
                                 <FormControl>
                                     <Input
-                                        defaultValue={cloud.area}
+                                        defaultValue={cloud?.factor}
                                         type='number'
                                         className=''
                                         {...field}
@@ -137,7 +113,7 @@ const FormEdit = ({ cloud }: { cloud: CloudState }) => {
                             <FormLabel>Descrição</FormLabel>
                             <FormControl>
                                 <Textarea
-                                    defaultValue={cloud.area}
+                                    defaultValue={cloud?.description}
                                     placeholder='Tell us a little bit about yourself'
                                     className=''
                                     {...field}
@@ -150,7 +126,7 @@ const FormEdit = ({ cloud }: { cloud: CloudState }) => {
                 />
 
                 {/* DeliverableList */}
-                <ToggleGroupDeliverable form={form}  />
+                <ToggleGroupDeliverable form={form} />
                 {/* ConversionList */}
                 <GroupConversionForm form={form} />
                 <Button className='bg-primary-500 mt-3' type='submit'>

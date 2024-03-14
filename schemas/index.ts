@@ -25,19 +25,34 @@ export const RegisterSchema = z.object({
 export const QuotationSchema = z.object({
     name: z
         .string()
-        .min(2, { message: 'O nome deve ter pelo menos 2 caracteres' })
-        .max(50, { message: 'O nome não pode ter mais de 50 caracteres' }),
-    area: z.preprocess(a => parseInt(z.string().parse(a), 10), z.number()),
+        .min(2, {
+            message: 'O nome da cotação deve ter pelo menos 2 caracteres',
+        })
+        .nonempty('O nome da cotação é obrigatório'),
+    area: z.preprocess(
+        a => parseInt(z.string().parse(a), 10),
+        z.number().nonnegative('A área deve ser um número positivo'),
+    ),
+    factor: z.preprocess(
+        a => parseInt(z.string().parse(a), 10),
+        z
+            .number()
+            .nonnegative('O fator de complexidade deve ser um número positivo'),
+    ),
     description: z
-        .string()
+        .string({ required_error: 'A descrição é obrigatória' })
         .min(10, { message: 'A descrição deve ter pelo menos 10 caracteres' })
         .max(250, {
             message: 'A descrição não pode ter mais de 250 caracteres',
         }),
-    factor: z.preprocess(a => parseInt(z.string().parse(a), 10), z.number()),
-    conversionsId: z
-        .array(z.number())
+
+    conversionId: z
+        .array(
+            z.number({ required_error: 'A lista de conversões é obrigatória' }),
+        )
         .nonempty({ message: 'A lista de conversões não pode estar vazia' }),
 
-    deliverablesId: z.array(z.number()),
+    deliverableId: z
+        .array(z.number({ required_error: 'A forma de entrega é obrigatória' }))
+        .nonempty({ message: 'A forma de entrega não pode estar vazia' }),
 })

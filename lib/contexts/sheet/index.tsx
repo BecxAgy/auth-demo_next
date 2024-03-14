@@ -6,7 +6,8 @@ export type SheetContextProps = {
     openSheet: boolean
     setOpenSheet: (value: boolean) => void
     toogleSheet: () => void
-    cloud: CloudState | null
+    cloud: CloudState
+    setCloud: (value: CloudState) => void
     getCloudByIdAfterOpenSheet: (id: number) => void
 }
 const SheetContext = createContext({} as SheetContextProps)
@@ -32,7 +33,8 @@ function SheetProvider({ children }: { children: React.ReactNode }) {
                 openSheet,
                 setOpenSheet,
                 toogleSheet,
-                cloud,
+                setCloud,
+                cloud: cloud as CloudState, // Fix: Update the type of 'cloud' to 'CloudState | null'
                 getCloudByIdAfterOpenSheet,
             }}
         >
