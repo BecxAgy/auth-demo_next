@@ -17,19 +17,20 @@ import { Button } from '@/components/ui/button'
 import { ToggleGroupDeliverable } from './group-deliverables'
 import GroupConversionForm from './group-conversions'
 import { CloudState } from '@/utils/types'
-import { QuotationSchema } from '@/schemas'
+
 import { useDispatch } from 'react-redux'
 import { AppDispatch } from '@/lib/store'
 import { editCloud } from '@/lib/features/cloud-slice'
 import { use, useContext, useEffect } from 'react'
 import { SheetContext } from '@/lib/contexts/sheet'
+import { CloudSchema } from '@/schemas'
 
 const FormEdit = ({ cloud }: { cloud: CloudState }) => {
     const dispatch = useDispatch<AppDispatch>()
     const { toogleSheet, setCloud } = useContext(SheetContext)
 
-    const form = useForm<z.infer<typeof QuotationSchema>>({
-        resolver: zodResolver(QuotationSchema),
+    const form = useForm<z.infer<typeof CloudSchema>>({
+        resolver: zodResolver(CloudSchema),
         defaultValues: {},
     })
 

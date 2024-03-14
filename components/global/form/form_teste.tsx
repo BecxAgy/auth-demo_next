@@ -16,94 +16,103 @@ import { Textarea } from '@/components/ui/textarea'
 import { Button } from '@/components/ui/button'
 import { ToggleGroupDeliverable } from './group-deliverables'
 import GroupConversionForm from './group-conversions'
+import { CloudSchema } from '@/schemas'
+import { useDispatch, useSelector } from 'react-redux'
+import { AppDispatch, RootState } from '@/lib/store'
+import { createCloud } from '@/lib/features/cloud-slice'
+import { Dialog } from '@radix-ui/react-dialog'
+import DialogFinishCreate from '../dialog-finish-create'
+import { useEffect, useState } from 'react'
 
-export const QuotationSchema = z.object({
-    name: z
-        .string()
-        .min(2, {
-            message: 'O nome da cotação deve ter pelo menos 2 caracteres',
-        })
-        .nonempty('O nome da cotação é obrigatório'),
-    area: z.preprocess(
-        a => parseInt(z.string().parse(a), 10),
-        z.number().nonnegative('A área deve ser um número positivo'),
-    ),
-    factor: z.preprocess(
-        a => parseInt(z.string().parse(a), 10),
-        z
-            .number()
-            .nonnegative('O fator de complexidade deve ser um número positivo'),
-    ),
-    description: z
-        .string({ required_error: 'A descrição é obrigatória' })
-        .min(10, { message: 'A descrição deve ter pelo menos 10 caracteres' })
-        .max(250, {
-            message: 'A descrição não pode ter mais de 250 caracteres',
-        }),
-
-    conversionId: z
-        .array(
-            z.number({ required_error: 'A lista de conversões é obrigatória' }),
-        )
-        .nonempty({ message: 'A lista de conversões não pode estar vazia' }),
-
-    deliverableId: z
-        .array(z.number({ required_error: 'A forma de entrega é obrigatória' }))
-        .nonempty({ message: 'A forma de entrega não pode estar vazia' }),
-})
 const FormTeste = () => {
-    const form = useForm<z.infer<typeof QuotationSchema>>({
-        resolver: zodResolver(QuotationSchema),
+    const dispatch = useDispatch<AppDispatch>()
+    const { success, message } = useSelector((state: RootState) => state.cloud)
+    const [openDialog, setOpenDialog] = useState(false)
+    const form = useForm<z.infer<typeof CloudSchema>>({
+        resolver: zodResolver(CloudSchema),
         defaultValues: {},
     })
 
     const onSubmit = async (values: any) => {
         debugger
-        const res = await fetch('http://localhost:4006/api/cloud/', {
-            method: 'POST',
-            headers: {
-                'Content-Type': 'application/json',
-            },
-            body: JSON.stringify(values),
-        })
-            .then(response => response.json())
-            .then(data => {
-                console.log('Success:', data)
-            })
-            .catch(error => {
-                console.error('Error:', error)
-            })
-        console.log('Resposta api', res)
+        dispatch(createCloud(values))
     }
+    useEffect(() => {
+        if (success && openDialog === false) {
+            setOpenDialog(true)
+        }
+    }, [success])
 
     return (
-        <Form {...form}>
-            <form onSubmit={form.handleSubmit(onSubmit)}>
-                {/* Name */}
-                <FormField
-                    control={form.control}
-                    name='name'
-                    render={({ field }) => (
-                        <FormItem>
-                            <FormLabel>Nome da Cotação</FormLabel>
-                            <FormControl>
-                                <Input className='' {...field} />
-                            </FormControl>
-
-                            <FormMessage className='text-red-600' />
-                        </FormItem>
-                    )}
-                />
-                <div className='flex flex-row gap-5'>
+        <div>
+            <Form {...form}>
+                <form onSubmit={form.handleSubmit(onSubmit)}>
+                    {/* Name */}
                     <FormField
                         control={form.control}
-                        name='area'
+                        name='name'
                         render={({ field }) => (
                             <FormItem>
-                                <FormLabel>Área (m²)</FormLabel>
+                                <FormLabel>Nome da Cotação</FormLabel>
                                 <FormControl>
-                                    <Input
-                                        type='number'
+                                    <Input className='' {...field} />
+                                </FormControl>
+
+                                <FormMessage className='text-red-600' />
+                            </FormItem>
+                        )}
+                    />
+                    <div className='flex flex-row gap-5'>
+                        <FormField
+                            control={form.control}
+                            name='area'
+                            render={({ field }) => (
+                                <FormItem>
+                                    <FormLabel>Área (m²)</FormLabel>
+                                    <FormControl>
+                                        <Input
+                                            type='number'
+                                            className=''
+                                            {...field}
+                                        />
+                                    </FormControl>
+
+                                    <FormMessage className='text-red-600' />
+                                </FormItem>
+                            )}
+                        />
+                        {/* Fator de Complexidade */}
+                        <FormField
+                            control={form.control}
+                            name='factor'
+                            render={({ field }) => (
+                                <FormItem>
+                                    <FormLabel>Fator</FormLabel>
+                                    <FormControl>
+                                        <Input
+                                            type='number'
+                                            className=''
+                                            {...field}
+                                        />
+                                    </FormControl>
+
+                                    <FormMessage className='text-red-600' />
+                                </FormItem>
+                            )}
+                        />
+                    </div>
+                    {/* Area */}
+
+                    {/* Description */}
+                    <FormField
+                        control={form.control}
+                        name='description'
+                        render={({ field }) => (
+                            <FormItem>
+                                <FormLabel>Descrição</FormLabel>
+                                <FormControl>
+                                    <Textarea
+                                        placeholder='Tell us a little bit about yourself'
                                         className=''
                                         {...field}
                                     />
@@ -113,57 +122,21 @@ const FormTeste = () => {
                             </FormItem>
                         )}
                     />
-                    {/* Fator de Complexidade */}
-                    <FormField
-                        control={form.control}
-                        name='factor'
-                        render={({ field }) => (
-                            <FormItem>
-                                <FormLabel>Fator</FormLabel>
-                                <FormControl>
-                                    <Input
-                                        type='number'
-                                        className=''
-                                        {...field}
-                                    />
-                                </FormControl>
 
-                                <FormMessage className='text-red-600' />
-                            </FormItem>
-                        )}
-                    />
-                </div>
-                {/* Area */}
-
-                {/* Description */}
-                <FormField
-                    control={form.control}
-                    name='description'
-                    render={({ field }) => (
-                        <FormItem>
-                            <FormLabel>Descrição</FormLabel>
-                            <FormControl>
-                                <Textarea
-                                    placeholder='Tell us a little bit about yourself'
-                                    className=''
-                                    {...field}
-                                />
-                            </FormControl>
-
-                            <FormMessage className='text-red-600' />
-                        </FormItem>
-                    )}
-                />
-
-                {/* DeliverableList */}
-                <ToggleGroupDeliverable form={form} />
-                {/* ConversionList */}
-                <GroupConversionForm form={form} />
-                <Button className='bg-primary-500 mt-3' type='submit'>
-                    Enviar
-                </Button>
-            </form>
-        </Form>
+                    {/* DeliverableList */}
+                    <ToggleGroupDeliverable form={form} />
+                    {/* ConversionList */}
+                    <GroupConversionForm form={form} />
+                    <Button className='bg-primary-500 mt-3' type='submit'>
+                        Enviar
+                    </Button>
+                </form>
+            </Form>
+            <DialogFinishCreate
+                open={openDialog}
+                onOpenChange={setOpenDialog}
+            />
+        </div>
     )
 }
 

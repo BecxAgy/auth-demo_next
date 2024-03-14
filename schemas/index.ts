@@ -22,7 +22,7 @@ export const RegisterSchema = z.object({
     }),
 })
 
-export const QuotationSchema = z.object({
+export const CloudSchema = z.object({
     name: z
         .string()
         .min(2, {

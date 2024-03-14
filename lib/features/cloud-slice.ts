@@ -43,6 +43,18 @@ export const getAllQuotations = createAsyncThunk(
         return data
     },
 )
+export const createCloud = createAsyncThunk(
+    'cloud/create',
+    async (cloud: any, thunkAPI) => {
+        const data = await cloudService.createCloud(cloud)
+
+        if (data.error) {
+            return thunkAPI.rejectWithValue(data.error)
+        }
+
+        return data
+    },
+)
 
 export const editCloud = createAsyncThunk(
     'cloud/edit',
@@ -82,7 +94,7 @@ export const cloudSlice = createSlice({
             })
             .addCase(getAllQuotations.fulfilled, (state, action) => {
                 state.loading = false
-                state.success = true
+                state.success = false
 
                 if (action.payload !== undefined) {
                     state.quotations = action.payload
@@ -98,6 +110,24 @@ export const cloudSlice = createSlice({
                 if (action.payload !== undefined) {
                     state.cloud = action.payload
                 }
+            })
+            .addCase(createCloud.pending, state => {
+                state.loading = true
+                state.error = false
+            })
+            .addCase(createCloud.fulfilled, (state, action) => {
+                state.loading = false
+                state.success = true
+                state.error = null
+                state.cloud = action.payload
+                //adicionando no primeiro lugar do array
+
+                state.message = 'Solicitação criada com sucesso!'
+            })
+            .addCase(createCloud.rejected, (state, action) => {
+                state.loading = false
+                state.error = action.payload
+                state.success = false
             })
             .addCase(editCloud.pending, state => {
                 state.loading = true
