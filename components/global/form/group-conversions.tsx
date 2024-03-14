@@ -45,7 +45,7 @@ const GroupConversionForm = ({ form }: any) => {
                 cloud.Conversions.map(item => item.id),
             )
         }
-    }, [cloud, form])
+    }, [cloud])
     return (
         <FormField
             control={form.control}
