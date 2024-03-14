@@ -33,9 +33,7 @@ const DialogFinishCreate = ({
 
                 <Link
                     onClick={() => {
-                        console.log('fechando', open)
                         onOpenChange(!open)
-                        console.log('fechou', open)
                     }}
                     className='text-center'
                     href={'/cotacoes/list'}

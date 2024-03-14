@@ -1,6 +1,6 @@
 import { cloudService } from '@/lib/service/cloud-service'
 import { quotationService } from '@/lib/service/quotationService'
-import { CloudState, QuotationView } from '@/utils/types'
+import { CloudEdit, CloudState, QuotationView } from '@/utils/types'
 import { Reducer, createAsyncThunk, createSlice } from '@reduxjs/toolkit'
 
 type InitialState = {
@@ -58,7 +58,7 @@ export const createCloud = createAsyncThunk(
 
 export const editCloud = createAsyncThunk(
     'cloud/edit',
-    async (cloud: CloudState, thunkAPI) => {
+    async (cloud: any, thunkAPI) => {
         console.log('bateu no slice edit')
         const data = await cloudService.updateCloudById(cloud.id, cloud)
 
