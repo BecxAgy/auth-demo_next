@@ -36,7 +36,15 @@ export type CloudState = {
     Deliverables: Array<Deliverable>
     Conversions: Array<Conversion>
 }
-
+export type CloudEdit = {
+    id: number
+    name: string
+    area: number
+    factor: number
+    description: string
+    Deliverables: Array<number>
+    Conversions: Array<number>
+}
 export type Conversion = {
     id: number
     type: string

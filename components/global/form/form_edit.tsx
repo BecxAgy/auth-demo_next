@@ -23,19 +23,27 @@ import { AppDispatch } from '@/lib/store'
 import { editCloud } from '@/lib/features/cloud-slice'
 import { use, useContext, useEffect } from 'react'
 import { SheetContext } from '@/lib/contexts/sheet'
-import { CloudSchema } from '@/schemas'
+import { CloudEditSchema } from '@/schemas'
 
 const FormEdit = ({ cloud }: { cloud: CloudState }) => {
     const dispatch = useDispatch<AppDispatch>()
     const { toogleSheet, setCloud } = useContext(SheetContext)
 
-    const form = useForm<z.infer<typeof CloudSchema>>({
-        resolver: zodResolver(CloudSchema),
-        defaultValues: {},
+    const form = useForm<z.infer<typeof CloudEditSchema>>({
+        resolver: zodResolver(CloudEditSchema),
+        defaultValues: {
+            name: cloud?.name,
+            area: parseFloat(cloud?.area.toString()),
+            factor: parseFloat(cloud?.factor.toString()),
+            description: cloud?.description,
+            deliverableId: cloud?.Deliverables.map(d => d.id),
+            conversionId: cloud?.Conversions.map(c => c.id),
+        },
     })
 
     const onSubmit = async (values: any) => {
         debugger
+        console.log(cloud)
         dispatch(editCloud({ id: cloud.id, ...values }))
         toogleSheet()
     }
@@ -51,11 +59,7 @@ const FormEdit = ({ cloud }: { cloud: CloudState }) => {
                         <FormItem>
                             <FormLabel>Nome da Cotação</FormLabel>
                             <FormControl>
-                                <Input
-                                    className=''
-                                    defaultValue={cloud?.name}
-                                    {...field}
-                                />
+                                <Input className='' {...field} />
                             </FormControl>
 
                             <FormMessage className='text-red-600' />
@@ -71,7 +75,6 @@ const FormEdit = ({ cloud }: { cloud: CloudState }) => {
                                 <FormLabel>Área (m²)</FormLabel>
                                 <FormControl>
                                     <Input
-                                        defaultValue={cloud?.area}
                                         type='number'
                                         className=''
                                         {...field}
@@ -91,7 +94,6 @@ const FormEdit = ({ cloud }: { cloud: CloudState }) => {
                                 <FormLabel>Fator</FormLabel>
                                 <FormControl>
                                     <Input
-                                        defaultValue={cloud?.factor}
                                         type='number'
                                         className=''
                                         {...field}
@@ -114,7 +116,6 @@ const FormEdit = ({ cloud }: { cloud: CloudState }) => {
                             <FormLabel>Descrição</FormLabel>
                             <FormControl>
                                 <Textarea
-                                    defaultValue={cloud?.description}
                                     placeholder='Tell us a little bit about yourself'
                                     className=''
                                     {...field}

@@ -56,3 +56,18 @@ export const CloudSchema = z.object({
         .array(z.number({ required_error: 'A forma de entrega é obrigatória' }))
         .nonempty({ message: 'A forma de entrega não pode estar vazia' }),
 })
+
+export const CloudEditSchema = z.object({
+    name: z.string().optional(),
+    area: z.preprocess(
+        (a, ctx) => parseInt(z.string().parse(a, ctx), 10),
+        z.number().optional(),
+    ),
+    factor: z.preprocess(
+        (a, ctx) => parseInt(z.string().parse(a, ctx), 10),
+        z.number().optional(),
+    ),
+    description: z.string().optional(),
+    conversionId: z.array(z.number()).optional(),
+    deliverableId: z.array(z.number()).optional(),
+})
