@@ -11,11 +11,13 @@ import {
     FormMessage,
 } from '@/components/ui/form'
 
-import { use, useContext, useEffect, useState } from 'react'
+import { useContext, useEffect, useState } from 'react'
 import { SheetContext } from '@/lib/contexts/sheet'
+import { RootState } from '@/lib/store'
+import { useSelector } from 'react-redux'
 
 export function ToggleGroupDeliverable({ form }: any) {
-    const { cloud } = useContext(SheetContext)
+    const { cloud } = useSelector((state: RootState) => state.cloud)
     const [selectedDeliverables, setSelectedDeliverables] = useState<number[]>(
         [],
     )
@@ -46,7 +48,7 @@ export function ToggleGroupDeliverable({ form }: any) {
     }, [selectedDeliverables])
 
     useEffect(() => {
-        if (cloud) {
+        if (cloud?.Deliverables) {
             //this line below is a test, after backend is done, this will be removed
             //cloud.Deliverables = [1]
             setSelectedDeliverables(

@@ -9,6 +9,8 @@ import {
 } from '../../ui/form'
 import { Checkbox } from '../../ui/checkbox'
 import { SheetContext } from '@/lib/contexts/sheet'
+import { useSelector } from 'react-redux'
+import { RootState } from '@/lib/store'
 
 const GroupConversionForm = ({ form }: any) => {
     const conversionsFormat = [
@@ -37,9 +39,9 @@ const GroupConversionForm = ({ form }: any) => {
             label: '.nwd',
         },
     ]
-    const { cloud } = useContext(SheetContext)
+    const { cloud } = useSelector((state: RootState) => state.cloud)
     useEffect(() => {
-        if (cloud) {
+        if (cloud.Conversions) {
             form.setValue(
                 'conversionId',
                 cloud.Conversions.map(item => item.id),

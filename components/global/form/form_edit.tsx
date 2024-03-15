@@ -18,28 +18,37 @@ import { ToggleGroupDeliverable } from './group-deliverables'
 import GroupConversionForm from './group-conversions'
 import { CloudState } from '@/utils/types'
 
-import { useDispatch } from 'react-redux'
-import { AppDispatch } from '@/lib/store'
+import { useDispatch, useSelector } from 'react-redux'
+import { AppDispatch, RootState } from '@/lib/store'
 import { editCloud } from '@/lib/features/cloud-slice'
 import { use, useContext, useEffect } from 'react'
 import { SheetContext } from '@/lib/contexts/sheet'
 import { CloudEditSchema } from '@/schemas'
 
-const FormEdit = ({ cloud }: { cloud: CloudState }) => {
+const FormEdit = () => {
     const dispatch = useDispatch<AppDispatch>()
-    const { toogleSheet, setCloud } = useContext(SheetContext)
+    const { toogleSheet } = useContext(SheetContext)
+    const { cloud } = useSelector((state: RootState) => state.cloud)
 
     const form = useForm<z.infer<typeof CloudEditSchema>>({
         resolver: zodResolver(CloudEditSchema),
-        defaultValues: {
-            name: cloud?.name,
-            area: parseFloat(cloud?.area.toString()),
-            factor: parseFloat(cloud?.factor.toString()),
-            description: cloud?.description,
-            deliverableId: cloud?.Deliverables.map(d => d.id),
-            conversionId: cloud?.Conversions.map(c => c.id),
-        },
     })
+    useEffect(() => {
+        if (cloud) {
+            form.reset({
+                name: cloud.name,
+                area: parseFloat(cloud.area.toString()),
+                factor: parseFloat(cloud.factor.toString()),
+                description: cloud.description,
+                deliverableId: cloud?.Deliverables
+                    ? cloud.Deliverables.map(d => d.id)
+                    : [],
+                conversionId: cloud?.Conversions
+                    ? cloud.Conversions.map(c => c.id)
+                    : [],
+            })
+        }
+    }, [cloud])
 
     const onSubmit = async (values: any) => {
         debugger
@@ -49,33 +58,75 @@ const FormEdit = ({ cloud }: { cloud: CloudState }) => {
     }
 
     return (
-        <Form {...form}>
-            <form onSubmit={form.handleSubmit(onSubmit)}>
-                {/* Name */}
-                <FormField
-                    control={form.control}
-                    name='name'
-                    render={({ field }) => (
-                        <FormItem>
-                            <FormLabel>Nome da Cotação</FormLabel>
-                            <FormControl>
-                                <Input className='' {...field} />
-                            </FormControl>
-
-                            <FormMessage className='text-red-600' />
-                        </FormItem>
-                    )}
-                />
-                <div className='flex flex-row gap-5'>
+        cloud && (
+            <Form {...form}>
+                <form onSubmit={form.handleSubmit(onSubmit)}>
+                    {/* Name */}
                     <FormField
                         control={form.control}
-                        name='area'
+                        name='name'
                         render={({ field }) => (
                             <FormItem>
-                                <FormLabel>Área (m²)</FormLabel>
+                                <FormLabel>Nome da Cotação</FormLabel>
                                 <FormControl>
-                                    <Input
-                                        type='number'
+                                    <Input className='' {...field} />
+                                </FormControl>
+
+                                <FormMessage className='text-red-600' />
+                            </FormItem>
+                        )}
+                    />
+                    <div className='flex flex-row gap-5'>
+                        <FormField
+                            control={form.control}
+                            name='area'
+                            render={({ field }) => (
+                                <FormItem>
+                                    <FormLabel>Área (m²)</FormLabel>
+                                    <FormControl>
+                                        <Input
+                                            type='number'
+                                            className=''
+                                            {...field}
+                                        />
+                                    </FormControl>
+
+                                    <FormMessage className='text-red-600' />
+                                </FormItem>
+                            )}
+                        />
+                        {/* Fator de Complexidade */}
+                        <FormField
+                            control={form.control}
+                            name='factor'
+                            render={({ field }) => (
+                                <FormItem>
+                                    <FormLabel>Fator</FormLabel>
+                                    <FormControl>
+                                        <Input
+                                            type='number'
+                                            className=''
+                                            {...field}
+                                        />
+                                    </FormControl>
+
+                                    <FormMessage className='text-red-600' />
+                                </FormItem>
+                            )}
+                        />
+                    </div>
+                    {/* Area */}
+
+                    {/* Description */}
+                    <FormField
+                        control={form.control}
+                        name='description'
+                        render={({ field }) => (
+                            <FormItem>
+                                <FormLabel>Descrição</FormLabel>
+                                <FormControl>
+                                    <Textarea
+                                        placeholder='Tell us a little bit about yourself'
                                         className=''
                                         {...field}
                                     />
@@ -85,57 +136,17 @@ const FormEdit = ({ cloud }: { cloud: CloudState }) => {
                             </FormItem>
                         )}
                     />
-                    {/* Fator de Complexidade */}
-                    <FormField
-                        control={form.control}
-                        name='factor'
-                        render={({ field }) => (
-                            <FormItem>
-                                <FormLabel>Fator</FormLabel>
-                                <FormControl>
-                                    <Input
-                                        type='number'
-                                        className=''
-                                        {...field}
-                                    />
-                                </FormControl>
 
-                                <FormMessage className='text-red-600' />
-                            </FormItem>
-                        )}
-                    />
-                </div>
-                {/* Area */}
-
-                {/* Description */}
-                <FormField
-                    control={form.control}
-                    name='description'
-                    render={({ field }) => (
-                        <FormItem>
-                            <FormLabel>Descrição</FormLabel>
-                            <FormControl>
-                                <Textarea
-                                    placeholder='Tell us a little bit about yourself'
-                                    className=''
-                                    {...field}
-                                />
-                            </FormControl>
-
-                            <FormMessage className='text-red-600' />
-                        </FormItem>
-                    )}
-                />
-
-                {/* DeliverableList */}
-                <ToggleGroupDeliverable form={form} />
-                {/* ConversionList */}
-                <GroupConversionForm form={form} />
-                <Button className='bg-primary-500 mt-3' type='submit'>
-                    Enviar
-                </Button>
-            </form>
-        </Form>
+                    {/* DeliverableList */}
+                    <ToggleGroupDeliverable form={form} />
+                    {/* ConversionList */}
+                    <GroupConversionForm form={form} />
+                    <Button className='bg-primary-500 mt-3' type='submit'>
+                        Enviar
+                    </Button>
+                </form>
+            </Form>
+        )
     )
 }
 

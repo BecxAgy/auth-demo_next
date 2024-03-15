@@ -21,9 +21,9 @@ import RemoveButton from '@/components/global/remove-button'
 export type QuotationView = {
     id: number
     name: string
-    sale_cost: number
-    scanner_cost: number
-    actual_cost: number
+    sale_Cost: number
+    scanner_Cost: number
+    actual_Cost: number
     deadline: number
     factor: number
 }
@@ -36,7 +36,7 @@ export type CloudState = {
     Deliverables: Array<Deliverable>
     Conversions: Array<Conversion>
 }
-export type CloudEdit = {
+export type Cloud = {
     id: number
     name: string
     area: number
@@ -79,15 +79,15 @@ export const columnsQuotation: ColumnDef<QuotationView>[] = [
         },
     },
     {
-        accessorKey: 'sale_cost',
+        accessorKey: 'sale_Cost',
         header: 'Custo de Venda',
     },
     {
-        accessorKey: 'scanner_cost',
+        accessorKey: 'scanner_Cost',
         header: 'Custo do Scanner',
     },
     {
-        accessorKey: 'actual_cost',
+        accessorKey: 'actual_Cost',
         header: 'Custo Atual',
     },
     {

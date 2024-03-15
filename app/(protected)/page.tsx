@@ -28,7 +28,7 @@ const List = () => {
         dispatch(getAllQuotations())
     }, [dispatch, success])
     useEffect(() => {
-        if (error) {
+        if (error && message) {
             toast({
                 variant: 'destructive',
                 title: 'Ops! Algo deu errado.',
@@ -40,7 +40,7 @@ const List = () => {
                 ),
             })
         }
-        if (success) {
+        if (success && message) {
             toast({
                 variant: 'success',
                 title: 'Sucesso!',

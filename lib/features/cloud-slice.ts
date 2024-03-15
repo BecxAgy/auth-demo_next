@@ -1,6 +1,6 @@
 import { cloudService } from '@/lib/service/cloud-service'
 import { quotationService } from '@/lib/service/quotationService'
-import { CloudEdit, CloudState, QuotationView } from '@/utils/types'
+import { CloudState, QuotationView } from '@/utils/types'
 import { Reducer, createAsyncThunk, createSlice } from '@reduxjs/toolkit'
 
 type InitialState = {
@@ -32,6 +32,7 @@ const InitialState = {
 export const getCloudById = createAsyncThunk(
     'cloud/getById',
     async (id: number, thunkAPI) => {
+        debugger
         const data = await cloudService.getCloudById(id)
         return data
     },
@@ -108,6 +109,7 @@ export const cloudSlice = createSlice({
                 state.success = true
 
                 if (action.payload !== undefined) {
+                    debugger
                     state.cloud = action.payload
                 }
             })

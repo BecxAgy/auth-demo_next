@@ -1,6 +1,10 @@
 import { createContext, useState } from 'react'
 import { CloudState } from '@/utils/types'
 import { cloudService } from '@/lib/service/cloud-service'
+import { set } from 'zod'
+import cloudSlice, { getCloudById } from '@/lib/features/cloud-slice'
+import { useDispatch } from 'react-redux'
+import { AppDispatch } from '@/lib/store'
 
 export type SheetContextProps = {
     openSheet: boolean
@@ -15,16 +19,16 @@ const SheetContext = createContext({} as SheetContextProps)
 function SheetProvider({ children }: { children: React.ReactNode }) {
     const [openSheet, setOpenSheet] = useState<boolean>(false)
     const [cloud, setCloud] = useState<CloudState | null>(null)
+    const dispatch = useDispatch<AppDispatch>()
 
     const toogleSheet = () => {
         setOpenSheet(!openSheet)
-        console.log('sheet esta:', openSheet)
     }
 
     const getCloudByIdAfterOpenSheet = async (id: number) => {
         debugger
-        const data = await cloudService.getCloudById(id)
-        setCloud(data)
+        dispatch(getCloudById(id))
+        setOpenSheet(true)
     }
 
     return (

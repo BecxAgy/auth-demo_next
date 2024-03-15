@@ -3,6 +3,7 @@ const API_URL = 'http://localhost:4006/api/cloud'
 export const cloudService = {
     getCloudById: async (id: number) => {
         try {
+            debugger
             const response = await fetch(`${API_URL}/${id}`)
             return response.json()
         } catch (error) {
