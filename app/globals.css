@@ -8,7 +8,12 @@ body :root {
 }
 
 .gradient_login {
-    @apply bg-gradient-to-r from-orange-800/50 to-slate-200;
+    background-image: linear-gradient(
+        to bottom right,
+        #031035,
+        #22315e,
+        #1f2937
+    );
 }
 
 /* main */
