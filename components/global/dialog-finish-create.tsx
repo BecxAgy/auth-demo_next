@@ -36,7 +36,7 @@ const DialogFinishCreate = ({
                         onOpenChange(!open)
                     }}
                     className='text-center'
-                    href={'/cotacoes/list'}
+                    href={'/'}
                 >
                     <Button className='bg-primary-500'>Ir Para Painel</Button>
                 </Link>

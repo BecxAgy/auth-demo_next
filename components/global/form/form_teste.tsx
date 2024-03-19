@@ -38,7 +38,7 @@ const FormTeste = () => {
         dispatch(createCloud(values))
     }
     useEffect(() => {
-        if (success && openDialog === false) {
+        if (success && message) {
             setOpenDialog(true)
         }
     }, [success])
@@ -46,7 +46,10 @@ const FormTeste = () => {
     return (
         <div>
             <Form {...form}>
-                <form onSubmit={form.handleSubmit(onSubmit)}>
+                <form
+                    className='flex  flex-col gap-[7px]'
+                    onSubmit={form.handleSubmit(onSubmit)}
+                >
                     {/* Name */}
                     <FormField
                         control={form.control}

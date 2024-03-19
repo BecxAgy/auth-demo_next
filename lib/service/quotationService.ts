@@ -1,4 +1,4 @@
-const API_URL = 'http://localhost:4006/api/cloud'
+const API_URL = 'http://localhost:4006/api'
 
 export const quotationService = {
     getQuotationById: async (id: number) => {
@@ -13,7 +13,7 @@ export const quotationService = {
     getAllQuotations: async () => {
         try {
             debugger
-            const response = await fetch(`${API_URL}/`)
+            const response = await fetch(`${API_URL}/resume/`)
             return response.json()
         } catch (error) {
             throw new Error('Failed to get all quotations')

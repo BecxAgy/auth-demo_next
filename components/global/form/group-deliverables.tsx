@@ -68,7 +68,7 @@ export function ToggleGroupDeliverable({ form }: any) {
                         Selecione os entregáveis que deseja
                     </FormDescription>
                     <FormControl>
-                        <div className='flex gap-10'>
+                        <div className='flex gap-10 py-[10px]'>
                             <Card
                                 onClick={() => handleDeliverableSelection(1)}
                                 className={`hover:border-primary-500 hover:text-primary-500 px-10 py-5 ${
@@ -77,7 +77,10 @@ export function ToggleGroupDeliverable({ form }: any) {
                                         : ''
                                 }`}
                             >
-                                <GoProjectSymlink className='w-8 h-8' />
+                                <div className='flex flex-col justify-center items-center gap-1'>
+                                    <GoProjectSymlink className='w-8 h-8' />
+                                    <p className='text-[13px]'>Online</p>
+                                </div>
                             </Card>
 
                             <Card
@@ -88,7 +91,10 @@ export function ToggleGroupDeliverable({ form }: any) {
                                         : ''
                                 }`}
                             >
-                                <BiSolidMemoryCard className='w-8 h-8' />
+                                <div className='flex flex-col justify-center items-center gap-1'>
+                                    <BiSolidMemoryCard className='w-8 h-8' />
+                                    <p className='text-[13px]'>Físico</p>
+                                </div>
                             </Card>
                         </div>
                     </FormControl>

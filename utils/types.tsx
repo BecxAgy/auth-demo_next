@@ -17,6 +17,7 @@ import { SheetContext } from '@/lib/contexts/sheet'
 import { Console } from 'console'
 import ToogleProvider from '@/components/global/toogle-provider'
 import RemoveButton from '@/components/global/remove-button'
+import Link from 'next/link'
 
 export type QuotationView = {
     id: number
@@ -72,7 +73,7 @@ export const columnsQuotation: ColumnDef<QuotationView>[] = [
                         column.toggleSorting(column.getIsSorted() === 'asc')
                     }
                 >
-                    Name
+                    Nome
                     <ArrowUpDown className='ml-2 h-4 w-4' />
                 </Button>
             )
@@ -117,7 +118,14 @@ export const columnsQuotation: ColumnDef<QuotationView>[] = [
                         className='bg-dark-2 text-white border-none shadow-lg'
                         align='end'
                     >
-                        <DropdownMenuItem>Visualizar</DropdownMenuItem>
+                        <DropdownMenuItem>
+                            <Link
+                                className=' ml-2 p-2 font-medium'
+                                href={`/cotacoes/${quotation.id}`}
+                            >
+                                Visualizar
+                            </Link>
+                        </DropdownMenuItem>
                         <DropdownMenuSeparator />
                         <DropdownMenuItem>
                             <ToogleProvider id={quotation.id}>

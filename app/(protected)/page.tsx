@@ -42,7 +42,6 @@ const List = () => {
         }
         if (success && message) {
             toast({
-                variant: 'success',
                 title: 'Sucesso!',
                 description: message,
             })
