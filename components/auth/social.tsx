@@ -9,7 +9,7 @@ import Image from 'next/image'
 
 const Social = () => {
     const onClick = (provider: 'azure') => {
-        signIn(provider, { callbackUrl: '/settings' })
+        signIn(provider, { callbackUrl: '/' })
     }
     return (
         <div className='flex w-full gap-x-2  justify-center items-center'>
