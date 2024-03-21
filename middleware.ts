@@ -19,10 +19,20 @@ export default auth(req => {
         return
     }
     //SE NAO ESTÁ LOGADO E NAO ESTÁ NUMA ROTA PUBLICA
+    if (isLoggedIn) {
+        console.log('isLoggedIn:', isLoggedIn)
+    }
+
+    if (isPublicRoute) {
+        console.log('isPublicRoute:', isPublicRoute)
+    }
+
     if (!isLoggedIn && !isPublicRoute) {
+        console.log('redirecting to login')
         return Response.redirect(new URL('/auth/login', nextUrl))
     }
     if (isLoggedIn && isPublicRoute) {
+        console.log('redirecting to / (the home page)')
         return Response.redirect(new URL(DEFAULT_LOGIN_REDIRECT, nextUrl))
     }
 })
