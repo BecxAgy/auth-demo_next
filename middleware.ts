@@ -14,14 +14,12 @@ export default auth(req => {
 
     const isApiAuthRoute = nextUrl.pathname.startsWith(apiAuthPrefix)
     const isPublicRoute = publicRoutes.includes(nextUrl.pathname)
-    const isAuthRoute = authRoutes.includes(nextUrl.pathname)
 
     if (isApiAuthRoute) {
         return
     }
     //SE NAO ESTÁ LOGADO E NAO ESTÁ NUMA ROTA PUBLICA
     if (!isLoggedIn && !isPublicRoute) {
-        console.log('saiu')
         return Response.redirect(new URL('/auth/login', nextUrl))
     }
     if (isLoggedIn && isPublicRoute) {
