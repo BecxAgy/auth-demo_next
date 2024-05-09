@@ -20,7 +20,6 @@ import { CloudSchema } from '@/schemas'
 import { useDispatch, useSelector } from 'react-redux'
 import { AppDispatch, RootState } from '@/lib/store'
 import { createCloud } from '@/lib/features/cloud-slice'
-import { Dialog } from '@radix-ui/react-dialog'
 import DialogFinishCreate from '../dialog-finish-create'
 import { useEffect, useState } from 'react'
 
@@ -90,12 +89,19 @@ const FormTeste = () => {
                             name='factor'
                             render={({ field }) => (
                                 <FormItem>
-                                    <FormLabel>Fator</FormLabel>
+                                    <FormLabel>Complexidade</FormLabel>
                                     <FormControl>
                                         <Input
                                             type='number'
-                                            className=''
                                             {...field}
+                                            onChange={e => {
+                                                const value =
+                                                    e.target.value.replace(
+                                                        ',',
+                                                        '.',
+                                                    )
+                                                field.onChange(value)
+                                            }}
                                         />
                                     </FormControl>
 

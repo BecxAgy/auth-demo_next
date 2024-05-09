@@ -30,11 +30,11 @@ export const CloudSchema = z.object({
         })
         .nonempty('O nome da cotação é obrigatório'),
     area: z.preprocess(
-        a => parseInt(z.string().parse(a), 10),
+        a => parseFloat(z.string().parse(a)),
         z.number().nonnegative('A área deve ser um número positivo'),
     ),
     factor: z.preprocess(
-        a => parseInt(z.string().parse(a), 10),
+        a => parseFloat(z.string().parse(a)),
         z
             .number()
             .nonnegative('O fator de complexidade deve ser um número positivo'),
@@ -56,17 +56,16 @@ export const CloudSchema = z.object({
         .array(z.number({ required_error: 'A forma de entrega é obrigatória' }))
         .nonempty({ message: 'A forma de entrega não pode estar vazia' }),
 })
-
 export const CloudEditSchema = z.object({
     name: z.string().optional(),
-    area: z.preprocess(
-        (a, ctx) => parseInt(z.string().parse(a, ctx), 10),
-        z.number().optional(),
-    ),
-    factor: z.preprocess(
-        (a, ctx) => parseInt(z.string().parse(a, ctx), 10),
-        z.number().optional(),
-    ),
+    area: z
+        .union([z.string(), z.number()])
+        .transform(val => parseFloat(val.toString()))
+        .optional(),
+    factor: z
+        .union([z.string(), z.number()])
+        .transform(val => parseFloat(val.toString()))
+        .optional(),
     description: z.string().optional(),
     conversionId: z.array(z.number()).optional(),
     deliverableId: z.array(z.number()).optional(),

@@ -101,7 +101,7 @@ const FormEdit = () => {
                             name='factor'
                             render={({ field }) => (
                                 <FormItem>
-                                    <FormLabel>Fator</FormLabel>
+                                    <FormLabel>Complexidade</FormLabel>
                                     <FormControl>
                                         <Input
                                             type='number'

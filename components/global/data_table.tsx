@@ -24,15 +24,10 @@ import {
     TableRow,
 } from '@/components/ui/table'
 
-import {
-    DropdownMenu,
-    DropdownMenuCheckboxItem,
-    DropdownMenuContent,
-    DropdownMenuTrigger,
-} from '@/components/ui/dropdown-menu'
-
 import { Button } from '@/components/ui/button'
 import { Input } from '@/components/ui/input'
+import { SearchIcon } from 'lucide-react'
+import Link from 'next/link'
 
 interface DataTableProps<TData, TValue> {
     columns: ColumnDef<TData, TValue>[]
@@ -71,9 +66,11 @@ export function DataTable<TData, TValue>({
             <div className=''>
                 {/* Filters */}
 
-                <div className='flex items-center justify-between'>
-                    <div className='flex items-center py-4 text-white'>
+                <div className='flex items-center py-4 justify-between text-white'>
+                    <div className='relative h-10'>
+                        <SearchIcon className='absolute w-5 text-gray-400 end-4 top-[0.30rem]' />
                         <Input
+                            type='search'
                             placeholder='Procure pelo nome'
                             value={
                                 (table
@@ -88,6 +85,10 @@ export function DataTable<TData, TValue>({
                             className='max-w-sm'
                         />
                     </div>
+
+                    <Link href='/cotacoes/create'>
+                        <Button className='bg-primary-500 p-4'>Criar</Button>
+                    </Link>
                 </div>
 
                 {/* Table */}

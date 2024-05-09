@@ -5,16 +5,11 @@ import {
     DropdownMenu,
     DropdownMenuContent,
     DropdownMenuItem,
-    DropdownMenuLabel,
     DropdownMenuSeparator,
     DropdownMenuTrigger,
 } from '@/components/ui/dropdown-menu'
 import { MoreHorizontal, ArrowUpDown } from 'lucide-react'
 import { Button } from '@/components/ui/button'
-import EditSheet from '@/components/global/edit-sheet'
-import { useContext } from 'react'
-import { SheetContext } from '@/lib/contexts/sheet'
-import { Console } from 'console'
 import ToogleProvider from '@/components/global/toogle-provider'
 import RemoveButton from '@/components/global/remove-button'
 import Link from 'next/link'
@@ -79,10 +74,7 @@ export const columnsQuotation: ColumnDef<QuotationView>[] = [
             )
         },
     },
-    {
-        accessorKey: 'sale_Cost',
-        header: 'Custo de Venda',
-    },
+
     {
         accessorKey: 'scanner_Cost',
         header: 'Custo do Scanner',
@@ -97,7 +89,11 @@ export const columnsQuotation: ColumnDef<QuotationView>[] = [
     },
     {
         accessorKey: 'factor',
-        header: 'Fator',
+        header: 'Complexidade',
+    },
+    {
+        accessorKey: 'sale_Cost',
+        header: 'Custo Final',
     },
     {
         id: 'actions',
